@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
+
+    <View
+        android:id="@+id/topbar"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:background="#15CA90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/search_option_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="60dp"
+        android:background="#15CA90"
+        android:backgroundTint="#DFDFDF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/duree_research_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="44dp"
+        android:background="#FFFFFF"
+        android:hint="Durée"
+        app:layout_constraintStart_toStartOf="@+id/search_option_menu"
+        app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
+
+    <EditText
+        android:id="@+id/metier_research_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="#FFFFFF"
+        android:hint="Métier"
+        app:layout_constraintEnd_toEndOf="@+id/search_option_menu"
+        app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
+
+    <EditText
+        android:id="@+id/lieu_research_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        android:background="#FFFFFF"
+        android:hint="Lieu"
+        app:layout_constraintStart_toStartOf="@+id/search_option_menu"
+        app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
+
+    <EditText
+        android:id="@+id/employeur_research_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="#FFFFFF"
+        android:hint="Employeur"
+        app:layout_constraintStart_toStartOf="@+id/search_option_menu"
+        app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
+
+    <EditText
+        android:id="@+id/periode_research_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="12dp"
+        android:background="#FFFFFF"
+        android:hint="Période"
+        app:layout_constraintStart_toStartOf="@+id/search_option_menu"
+        app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
+
+    <Button
+        android:id="@+id/dropdown_menu_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:background="#FFFFFF"
+        app:backgroundTint="@null"
+        android:backgroundTintMode="add"
+        app:layout_constraintBottom_toBottomOf="@+id/topbar"
+        app:layout_constraintStart_toStartOf="@+id/topbar"
+        app:layout_constraintTop_toTopOf="@+id/topbar" />
+
+    <ListView
+        android:id="@+id/offre_listview"
+        android:layout_width="380dp"
+        android:layout_height="511dp"
+        android:dividerHeight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_option_menu"
+        app:layout_constraintVertical_bias="0.876" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
