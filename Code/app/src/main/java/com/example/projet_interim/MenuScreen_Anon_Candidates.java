@@ -82,7 +82,7 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
         Intent intent = null;
         switch (itemId) {
             case R.id.drawerItem1:
-                intent = new Intent(MainScreen_Anon_Candidates.this, MenuScreen_Anon_Candidates.class);
+                //intent = new Intent(MainScreen_Anon_Candidates.this, MenuScreen_Anon_Candidates.class);
                 break;
             case R.id.drawerItem2:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
