@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainScreen_Anon_Candidates extends AppCompatActivity {
+public class MenuScreen_Anon_Candidates extends AppCompatActivity {
 
     ActionBarDrawerToggle barToggled;
 
@@ -51,10 +51,6 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
             }
         });
 
-        initOfferList();
-
-        OfferAdaptator adapter = new OfferAdaptator(MainScreen_Anon_Candidates.this,offerList);
-        listView.setAdapter(adapter);
     }
 
     @Override
@@ -63,18 +59,6 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    void initOfferList(){
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-        offerList.add(new String[] {"Caissier H/F", "Durant cet emploie vous aurez l'odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d'avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog"});
-
     }
 
     void gotoMenu(int itemId){

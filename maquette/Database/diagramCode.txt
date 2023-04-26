@@ -1,0 +1,42 @@
+// Copier sur dbdiagram.io
+
+Table annonces {
+  id integer [primary key]
+  creator_user_id integer
+  titre varchar
+  description varchar
+  coord varchar
+}
+
+Table candidature {
+  id integer [primary key]
+  candidat_id integer
+  annonce_id integer
+}
+
+Table candidature_en_cours {
+  id integer [primary key]
+  candidat_id integer
+  annonce_id integer
+}
+
+Table notifications {
+  id integer [primary key]
+  user_id integer
+  titre varchar
+  description varchar
+}
+
+Table users {
+  id integer [primary key]
+  username varchar
+  role varchar
+}
+
+
+Ref: annonces.creator_user_id > users.id // many-to-one
+Ref: notifications.user_id > users.id
+Ref: candidature.candidat_id > users.id
+Ref: candidature.annonce_id > annonces.id
+Ref: candidature_en_cours.candidat_id > users.id
+Ref: candidature_en_cours.annonce_id > annonces.id
