@@ -1,39 +1,37 @@
-package com.example.projet_interim;
+package com.example.projet_interim.Anon_Candidates;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.projet_interim.DB;
+import com.example.projet_interim.OfferAdaptator;
+import com.example.projet_interim.R;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MenuScreen_Anon_Candidates extends AppCompatActivity {
+public class MainScreen_Anon_Candidates extends AppCompatActivity {
 
     ActionBarDrawerToggle barToggled;
 
     ListView listView;
-    List<String[]> offerList = new ArrayList<>();
+    ArrayList<ArrayList<String>> offerList;
     DrawerLayout drawerLayout;
     NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Remove title bar
-        //this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.main_screen_anon_candidate);
 
         listView = (ListView)findViewById(R.id.offre_listview);
@@ -51,6 +49,11 @@ public class MenuScreen_Anon_Candidates extends AppCompatActivity {
             }
         });
 
+        DB db = new DB(getApplicationContext(), this);
+        offerList = db.annonces;
+
+        OfferAdaptator adapter = new OfferAdaptator(MainScreen_Anon_Candidates.this,offerList);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -65,14 +68,20 @@ public class MenuScreen_Anon_Candidates extends AppCompatActivity {
 
         Intent intent = null;
         switch (itemId) {
-            case R.id.drawerItem1:
-                //intent = new Intent(MainScreen_Anon_Candidates.this, MenuScreen_Anon_Candidates.class);
+            case R.id.drawer_profil:
+                intent = new Intent(getApplicationContext(), MenuScreen_Anon_Candidates.class);
                 break;
-            case R.id.drawerItem2:
+            case R.id.drawer_msg:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.drawerItem3:
+            case R.id.drawer_cvHelp:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.drawer_stat:
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.drawer_disconnect:
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
                 break;
         }
 

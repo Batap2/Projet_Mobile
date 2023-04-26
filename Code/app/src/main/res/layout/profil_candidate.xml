@@ -3,7 +3,7 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout1"
+    android:id="@+id/drawerLayout_profil_candidate"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_anon_candidate_mainmenu"
+        app:menu="@menu/drawer_candidate_profil"
         android:id="@+id/navView"
         android:layout_gravity="start"
         android:fitsSystemWindows="true" />

@@ -1,4 +1,4 @@
-package com.example.projet_interim;
+package com.example.projet_interim.Anon_Candidates;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,17 +15,18 @@ import android.view.Window;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.projet_interim.R;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainScreen_Anon_Candidates extends AppCompatActivity {
+public class MenuScreen_Anon_Candidates extends AppCompatActivity {
 
     ActionBarDrawerToggle barToggled;
 
     ListView listView;
-    ArrayList<ArrayList<String>> offerList;
+    List<String[]> offerList = new ArrayList<>();
     DrawerLayout drawerLayout;
     NavigationView navView;
 
@@ -33,10 +34,10 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main_screen_anon_candidate);
+        setContentView(R.layout.profil_candidate);
 
         listView = (ListView)findViewById(R.id.offre_listview);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout1);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_profil_candidate);
         navView = (NavigationView) findViewById(R.id.navView);
 
         barToggled = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
@@ -50,11 +51,6 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
             }
         });
 
-        DB db = new DB(getApplicationContext(), this);
-        offerList = db.annonces;
-
-        OfferAdaptator adapter = new OfferAdaptator(MainScreen_Anon_Candidates.this,offerList);
-        listView.setAdapter(adapter);
     }
 
     @Override
@@ -69,14 +65,20 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
 
         Intent intent = null;
         switch (itemId) {
-            case R.id.drawerItem1:
-                intent = new Intent(MainScreen_Anon_Candidates.this, MenuScreen_Anon_Candidates.class);
+            case R.id.drawer_annonce:
+                intent = new Intent(getApplicationContext(), MainScreen_Anon_Candidates.class);
                 break;
-            case R.id.drawerItem2:
+            case R.id.drawer_msg:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.drawerItem3:
+            case R.id.drawer_cvHelp:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.drawer_stat:
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.drawer_disconnect:
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
                 break;
         }
 
