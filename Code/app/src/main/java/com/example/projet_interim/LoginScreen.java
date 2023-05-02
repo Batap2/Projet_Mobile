@@ -3,6 +3,7 @@ package com.example.projet_interim;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projet_interim.Anon_Candidates.MainScreen_Anon_Candidates;
+import com.example.projet_interim.Anon_Candidates.AnnonceList_Menu_Anon_Candidates;
+import com.example.projet_interim.Anon_Candidates.Profile_Menu_Candidates;
 
 import java.util.ArrayList;
 
@@ -21,17 +23,20 @@ public class LoginScreen extends AppCompatActivity {
     EditText loging_text;
     Button login_button;
     ImageView image;
+    DB db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
+        DB.exempleFillIfEmpty(getApplicationContext(), this);
+
         loging_text = (EditText) findViewById(R.id.login_text);
         login_button = (Button) findViewById(R.id.login_button);
         image = (ImageView) findViewById(R.id.imageView);
 
-        DB db = new DB(getApplicationContext(), this);
+        db = new DB(getApplicationContext(), this);
 
         image.setRotation(2f);
 
@@ -47,6 +52,7 @@ public class LoginScreen extends AppCompatActivity {
                     CurentUser.getInstance().role = user.get(2);
 
                     Toast.makeText(getApplicationContext(), user.get(0) + " " + user.get(1) + " " + user.get(2), Toast.LENGTH_SHORT).show();
+                    gotoMenu();
                 } else {
                     Toast.makeText(getApplicationContext(), "Mauvais nom d'utilisateur / mot de passe", Toast.LENGTH_SHORT).show();
                 }
@@ -67,12 +73,45 @@ public class LoginScreen extends AppCompatActivity {
         };
 
         handler.post(runnable);
+
+        Log.e("DB", db.users.toString());
+    }
+
+    public void register(View view){
+        Intent intent = new Intent(getApplicationContext(), RegisterMenu1.class);
+        startActivity(intent);
+        db = new DB(getApplicationContext(), this);
     }
 
     public void anonConnect(View view){
         Toast.makeText(getApplicationContext(), "Vous êtes connecté en anonyme", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginScreen.this, MainScreen_Anon_Candidates.class);
+        Intent intent = new Intent(LoginScreen.this, AnnonceList_Menu_Anon_Candidates.class);
         startActivity(intent);
     }
 
+    public void gotoMenu(){
+
+        Intent intent = null;
+
+        Log.e("role", CurentUser.getInstance().role);
+
+        switch (CurentUser.getInstance().role) {
+            case "candidat":
+                intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
+                break;
+            case "employeur":
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                break;
+            case "agence":
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
+                break;
+            case "admin":
+                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        if(intent != null){
+            startActivity(intent);
+        }
+    }
 }

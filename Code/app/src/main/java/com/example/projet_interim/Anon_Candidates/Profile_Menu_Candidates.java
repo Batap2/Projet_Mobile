@@ -7,11 +7,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
 import com.example.projet_interim.OfferAdaptator;
 import com.example.projet_interim.R;
@@ -19,12 +20,16 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class MainScreen_Anon_Candidates extends AppCompatActivity {
+public class Profile_Menu_Candidates extends AppCompatActivity {
+
+    CurentUser user;
 
     ActionBarDrawerToggle barToggled;
 
-    ListView listView;
-    ArrayList<ArrayList<String>> offerList;
+    ListView listView_offres_attente;
+    ListView listview_offres_prisent;
+    ArrayList<ArrayList<String>> candidature_attente = new ArrayList<>();
+    ArrayList<ArrayList<String>> candidature_prisent = new ArrayList<>();
     DrawerLayout drawerLayout;
     NavigationView navView;
 
@@ -32,10 +37,11 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main_screen_anon_candidate);
+        setContentView(R.layout.profil_candidate);
 
-        listView = (ListView)findViewById(R.id.offre_listview);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout1);
+        listView_offres_attente = (ListView)findViewById(R.id.offre_listview);
+        listview_offres_prisent = (ListView)findViewById(R.id.offres_prisent_listview);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_profil_candidate);
         navView = (NavigationView) findViewById(R.id.navView);
 
         barToggled = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
@@ -49,11 +55,19 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
             }
         });
 
+        user = CurentUser.getInstance();
         DB db = new DB(getApplicationContext(), this);
-        offerList = db.annonces;
 
-        OfferAdaptator adapter = new OfferAdaptator(MainScreen_Anon_Candidates.this,offerList);
-        listView.setAdapter(adapter);
+        candidature_attente = db.getCandidatureAnnonceForUserId(user.id);
+        candidature_prisent = db.getAnnonces_prisentForUserId(user.id);
+
+        OfferAdaptator adapter1 = new OfferAdaptator(getApplicationContext(),candidature_attente);
+        listView_offres_attente.setAdapter(adapter1);
+        OfferAdaptator adapter2 = new OfferAdaptator(getApplicationContext(),candidature_prisent);
+        listview_offres_prisent.setAdapter(adapter2);
+
+        Log.e("c_attente", candidature_attente.toString());
+        Log.e("c_prisent", candidature_prisent.toString());
     }
 
     @Override
@@ -68,8 +82,8 @@ public class MainScreen_Anon_Candidates extends AppCompatActivity {
 
         Intent intent = null;
         switch (itemId) {
-            case R.id.drawer_profil:
-                intent = new Intent(getApplicationContext(), MenuScreen_Anon_Candidates.class);
+            case R.id.drawer_annonce:
+                intent = new Intent(getApplicationContext(), AnnonceList_Menu_Anon_Candidates.class);
                 break;
             case R.id.drawer_msg:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();

@@ -21,11 +21,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Anon_Candidates.MainScreen_Anon_Candidates"
+            android:name=".Anon_Candidates.AnnonceList_Menu_Anon_Candidates"
             android:exported="true">
         </activity>
         <activity
-            android:name=".Anon_Candidates.MenuScreen_Anon_Candidates"
+            android:name=".Anon_Candidates.Profile_Menu_Candidates"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".Anon_Candidates.ApplyTo_Menu_Candidates"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".RegisterMenu1"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".RegisterMenu2"
             android:exported="true">
         </activity>
     </application>
