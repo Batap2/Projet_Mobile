@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.projet_interim.Commun.NotifMenu;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
 import com.example.projet_interim.OfferAdaptator;
@@ -95,7 +96,7 @@ public class AnnonceList_Menu_Anon_Candidates extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
                 break;
             case R.id.drawer_msg:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), NotifMenu.class);
                 break;
             case R.id.drawer_cvHelp:
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();

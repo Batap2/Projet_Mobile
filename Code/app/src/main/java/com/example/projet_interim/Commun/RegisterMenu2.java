@@ -1,4 +1,4 @@
-package com.example.projet_interim;
+package com.example.projet_interim.Commun;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.projet_interim.DB;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

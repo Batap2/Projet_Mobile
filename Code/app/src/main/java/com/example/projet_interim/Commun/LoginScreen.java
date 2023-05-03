@@ -1,4 +1,4 @@
-package com.example.projet_interim;
+package com.example.projet_interim.Commun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projet_interim.Anon_Candidates.AnnonceList_Menu_Anon_Candidates;
 import com.example.projet_interim.Anon_Candidates.Profile_Menu_Candidates;
+import com.example.projet_interim.CurentUser;
+import com.example.projet_interim.DB;
+import com.example.projet_interim.R;
 
 import java.util.ArrayList;
 

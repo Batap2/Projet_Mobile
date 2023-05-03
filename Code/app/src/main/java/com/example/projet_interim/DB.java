@@ -18,7 +18,7 @@ public class DB {
     // employersAgency : id, user_id, nom entreprise, nom service/département, nom sous service/département, SIREN, mail2
     // annonces : id, creator_user_id, titre, description, coordonnées
     // annonces_prisent : id, creator_user_id, candidatId, titre, description, coordonnées
-    // notifications : id, user_id, titre, description
+    // notifications : id, user_id, receiverID, senderName, titre, contenu
     // candidatures : id, candidat_id, annonce_id, CV(txt), LDM(txt)
 
     public ArrayList<ArrayList<String>> candidatures = new ArrayList<>();
@@ -100,6 +100,8 @@ public class DB {
             e.printStackTrace();
         }
     }
+
+    // ---------------------------------------- USER ---------------------------------------- //
 
     public boolean addCandidate(String username, String mail, String nom, String prenom, String dateNaissance, String nationalite){
         ArrayList<String> user = new ArrayList<>();
@@ -186,6 +188,19 @@ public class DB {
         return null;
     }
 
+    public String getUserNameFromID(String id){
+        for(ArrayList<String> user : users){
+            if(user.get(0).equals(id)){
+                return user.get(1);
+            }
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------------------- //
+
+    // -------------------------------------- ANNONCES -------------------------------------- //
+
     public ArrayList<ArrayList<String>> getAnnoncesFromCreatorId(String id){
         ArrayList<ArrayList<String>> c = new ArrayList<>();
 
@@ -263,6 +278,10 @@ public class DB {
         writeToFile();
     }
 
+    // -------------------------------------------------------------------------------------- //
+
+    // ------------------------------------ CANDIDATURES ------------------------------------ //
+
     public void applyTo(String authorId, String annonceId){
         ArrayList<String> candidature = new ArrayList<>();
         candidature.add(String.valueOf(autoIncr_candidature));
@@ -297,6 +316,50 @@ public class DB {
         return true;
     }
 
+    // -------------------------------------------------------------------------------------- //
+
+    // --------------------------------------- NOTIF ---------------------------------------- //
+
+    public void addNotif(String authorId, String receiverID, String title, String content){
+        ArrayList<String> msg = new ArrayList<>();
+        msg.add(String.valueOf(autoIncr_notification));
+        msg.add(authorId);
+        msg.add(receiverID);
+        msg.add(getUserNameFromID(authorId));
+        msg.add(title);
+        msg.add(content);
+
+        notifications.add(msg);
+
+        autoIncr_notification = autoIncr_notification + 1;
+        writeToFile();
+    }
+
+    public ArrayList<ArrayList<String>> getNotifForUserID(String id){
+        ArrayList<ArrayList<String>> notifs = new ArrayList<>();
+
+        for(ArrayList<String> msg : notifications){
+            if(msg.get(2).equals(id)){
+                notifs.add(msg);
+            }
+        }
+        return notifs;
+    }
+
+    public void removeNotifFromId(String id){
+
+        ArrayList<ArrayList<String>> newNotif = new ArrayList<>();
+        for(int i = 0; i < notifications.size(); i++){
+            if(! notifications.get(i).get(0).equals(id)){
+                newNotif.add(notifications.get(i));
+            }
+        }
+        notifications = newNotif;
+        writeToFile();
+    }
+
+    // -------------------------------------------------------------------------------------- //
+
     // Reset la bdd et init avec quelques exemples
     public static void exempleFillIfEmpty(Context c, Activity a){
 
@@ -315,9 +378,10 @@ public class DB {
 
             db.addCandidate("candidat1", "candidat1@sriracha.com", "Sauce", "Sriracha", "01-01-2020", "chine");
             db.addCandidate("candidat2", "candidat2@golgoth.com", "Gol", "Goth", "01-01-2020", "chine");
-            db.addEmployerAgency("employeur1", "employeur", "bon@allez.fr", "BonAllez", "yes", "", "134578998", "oula@2.yes");
+            db.addEmployerAgency("employeur1", "employeur", "bon@allez.fr", "BonAllez&Co", "yes", "", "134578998", "oula@2.yes");
             db.addEmployerAgency("agence1", "agence", "zeAgence@oui.fr", "ZeAgence", "wé", "ouiYaUnSousService", "999999999", "zzz@zzz.zzz");
             db.addAdmin("admin1", "admin@ad.min");
+            db.addCandidate("spammeur", "spammeur@deouf.com", "Spamming", "Lord", "01-01-2000", "France");
 
             db.addAnnonce("2","Caissier H/F","Durant cet emploie vous aurez l\u0027odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d\u0027avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog");
             db.addAnnonce("2", "Agent de service à la clientèle H/F",      "Nous recherchons un(e) agent(e) de service à la clientèle pour rejoindre notre équipe. Les principales responsabilités du poste incluent: répondre aux appels et aux courriels des clients, gérer les plaintes, traiter les commandes, assurer le suivi des livraisons et fournir des informations sur nos produits et services. Le candidat idéal doit avoir un minimum de deux ans d'expérience dans un rôle similaire et posséder de bonnes compétences en communication.\n\nNous offrons un salaire compétitif et des avantages sociaux, mais le travail peut être stressant et exigeant, avec des horaires flexibles et des périodes de pointe où la charge de travail est très élevée. Si vous cherchez un travail facile et routinier, ce n'est pas pour vous. Nous recherchons quelqu'un de motivé et capable de gérer des situations difficiles avec calme et professionnalisme.\n\nSi vous êtes intéressé(e) par ce poste, veuillez soumettre votre CV et une lettre de motivation décrivant pourquoi vous êtes la bonne personne pour ce travail. Seuls les candidats sélectionnés seront contactés.",
@@ -349,6 +413,23 @@ public class DB {
             db.applyTo("1", "1");
 
             db.acceptCandidature("0");
+
+            db.addNotif("2", "0", "Pouvez vous m'envoyer votre CV ?", "Bonjour,\nVous avez oublié votre CV, merci de me l'envoyer\n\nCordialement,\nBonAllez&Co.");
+            db.addNotif("2", "0", "Re: Pouvez vous m'envoyer votre CV ?", "Bonjour,\nVous avez oublié votre CV, merci de me l'envoyer\n\nCordialement,\nBonAllez&Co.");
+            db.addNotif("1", "0", "yo mec !", "oh gars !\nComme on se retrouve...\nT'as vu je me suis inscris à INTERIBOY comme un bon citoyen :)");
+            db.addNotif("1", "0", "Re: yo mec !", "Bon en fait je crois que le monde de l'intérim n'est pas fait pour moi\nTu saurais pas comment on supprime son compte ?");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+            db.addNotif("5", "0", "SPAM A FOND", "MOI J'ENVOIE VLA LES MSG JUSTE POUR Le PLAISIR DE SPAM >:)");
+
         }
 
     }
