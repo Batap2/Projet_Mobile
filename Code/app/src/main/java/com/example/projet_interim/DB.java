@@ -119,6 +119,7 @@ public class DB {
         candidat.add(prenom);
         candidat.add(dateNaissance);
         candidat.add(nationalite);
+        candidat.add(""); //CV
 
         candidates.add(candidat);
 
@@ -170,6 +171,15 @@ public class DB {
         return true;
     }
 
+    public ArrayList<String> getUserById(String id){
+        for(ArrayList<String> user : users){
+            if(user.get(0).equals(id)){
+                return user;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<String> getUserByName(String username){
         for(ArrayList<String> user : users){
             if(user.get(1).equals(username)){
@@ -192,6 +202,33 @@ public class DB {
         for(ArrayList<String> user : users){
             if(user.get(0).equals(id)){
                 return user.get(1);
+            }
+        }
+        return null;
+    }
+
+    // info = {user_ID, username, role, mail, nom, prenom, date de naissance, nationalité, CV}
+    public ArrayList<String> getCandidatesInfo(String id){
+        ArrayList<String> info = new ArrayList<>();
+
+        for(ArrayList<String> user : users){
+            if(user.get(0).equals(id)){
+                info.add(id);
+                info.add(user.get(1));
+                info.add(user.get(2));
+                info.add(user.get(3));
+
+                for(ArrayList<String> candidate : candidates) {
+                    if (candidate.get(1).equals(id)) {
+                        info.add(candidate.get(2));
+                        info.add(candidate.get(3));
+                        info.add(candidate.get(4));
+                        info.add(candidate.get(5));
+                        info.add(candidate.get(6));
+                    }
+                }
+
+                return info;
             }
         }
         return null;
@@ -220,6 +257,16 @@ public class DB {
         return null;
     }
 
+    public String getAnnonceTitleFromId(String id){
+        for(ArrayList<String> annonce : annonces){
+            if(annonce.get(0).equals(id)){
+                return annonce.get(2);
+            }
+        }
+        return null;
+    }
+
+    // récupère les annonces pour lesquelles a candidaté un utilisateur
     public ArrayList<ArrayList<String>> getCandidatureAnnonceForUserId(String id){
         ArrayList<ArrayList<String>> c = new ArrayList<>();
 
@@ -282,11 +329,12 @@ public class DB {
 
     // ------------------------------------ CANDIDATURES ------------------------------------ //
 
-    public void applyTo(String authorId, String annonceId){
+    public void applyTo(String authorId, String annonceId, String lm){
         ArrayList<String> candidature = new ArrayList<>();
         candidature.add(String.valueOf(autoIncr_candidature));
         candidature.add(authorId);
         candidature.add(annonceId);
+        candidature.add(lm);
         candidatures.add(candidature);
 
         autoIncr_candidature = autoIncr_candidature + 1;
@@ -314,6 +362,66 @@ public class DB {
         writeToFile();
 
         return true;
+    }
+
+    public ArrayList<ArrayList<String>> getCandidaturesForAnnonceID(String id){
+        ArrayList<ArrayList<String>> c = new ArrayList<>();
+
+        for(ArrayList<String> candidature : candidatures){
+            if(candidature.get(2).equals(id)){
+                c.add(candidature);
+            }
+        }
+
+        return c;
+    }
+
+    public ArrayList<ArrayList<String>> getCandidaturesIntendedForUserID(String id){
+        ArrayList<ArrayList<String>> c = new ArrayList<>();
+        ArrayList<String> annonceIdsForUser = new ArrayList<>();
+
+        for(ArrayList<String> annonce : annonces){
+            if(annonce.get(1).equals(id)){
+                annonceIdsForUser.add(annonce.get(0));
+            }
+        }
+
+        for(ArrayList<String> candidature : candidatures){
+            if(annonceIdsForUser.contains(candidature.get(2))){
+                c.add(candidature);
+            }
+        }
+
+        return c;
+    }
+
+    // Info = {user_ID, username, role, mail, nom, prenom, date de naissance, nationalité, CV, LM}
+    public ArrayList<String> getInfoForCandidatureID(String id){
+        ArrayList<String> info = new ArrayList<>();
+
+        for(ArrayList<String> candidature : candidatures){
+            if(candidature.get(0).equals(id))
+            {
+                ArrayList<String> user = getUserById(candidature.get(1));
+                info = getCandidatesInfo(user.get(0));
+                info.add(candidature.get(3));
+                return info;
+            }
+        }
+
+        return null;
+    }
+
+    public void removeCandidatureFromId(String id)
+    {
+        ArrayList<ArrayList<String>> newCandidatures = new ArrayList<>();
+        for(int i = 0; i < candidatures.size(); i++){
+            if(! candidatures.get(i).get(0).equals(id)){
+                newCandidatures.add(candidatures.get(i));
+            }
+        }
+        candidatures = newCandidatures;
+        writeToFile();
     }
 
     // -------------------------------------------------------------------------------------- //
@@ -403,14 +511,13 @@ public class DB {
                     "SouperMarket\n14 rue de la cafetière, 12345 McDog"
             );
 
-            db.applyTo("0", "0");
-            db.applyTo("0", "1");
-            db.applyTo("0", "2");
-            db.applyTo("0", "3");
-            db.applyTo("0", "4");
-
-            db.applyTo("1", "0");
-            db.applyTo("1", "1");
+            db.applyTo("0", "0", "Voici ma Lettre de motivation");
+            db.applyTo("0", "1", "Voici ma Lettre de motivation2");
+            db.applyTo("0", "2", "Voici ma Lettre de motivation3");
+            db.applyTo("0", "3", "");
+            db.applyTo("0", "4", "");
+            db.applyTo("1", "0", "");
+            db.applyTo("1", "1", "");
 
             db.acceptCandidature("0");
 

@@ -48,6 +48,14 @@
             android:name=".Commun.WriteNotifMenu"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".EmployeurAgence.Profil_Menu_Employeur"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".EmployeurAgence.AddAnnonceMenu"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

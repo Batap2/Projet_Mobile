@@ -17,6 +17,7 @@ import com.example.projet_interim.Anon_Candidates.AnnonceList_Menu_Anon_Candidat
 import com.example.projet_interim.Anon_Candidates.Profile_Menu_Candidates;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
+import com.example.projet_interim.EmployeurAgence.Profil_Menu_Employeur;
 import com.example.projet_interim.R;
 
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class LoginScreen extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
                 break;
             case "employeur":
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), Profil_Menu_Employeur.class);
                 break;
             case "agence":
                 Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
