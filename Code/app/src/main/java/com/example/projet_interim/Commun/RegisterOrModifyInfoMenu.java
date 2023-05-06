@@ -10,10 +10,7 @@ import android.widget.Toast;
 
 import com.example.projet_interim.DB;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-public class RegisterMenu2 extends Activity {
+public class RegisterOrModifyInfoMenu extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

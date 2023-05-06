@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DB {
@@ -232,6 +233,57 @@ public class DB {
             }
         }
         return null;
+    }
+    // employersAgency : id, user_id, nom entreprise, nom service/département, nom sous service/département, SIREN, mail2
+    // info = {role, mail, nom, prenom, date de naissance, nationalité, CV}
+    // or
+    // info = {role, mail, nom entreprise, nom service/département, nom sous service/département, SIREN, mail2}
+    public void modifyUserInfo(String userID, ArrayList<String> info){
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).get(0).equals(userID)){
+                ArrayList<String> user = users.get(i);
+                user.set(3, info.get(1));
+                users.set(i, user);
+            }
+        }
+
+        switch (info.get(0)){
+            case "candidat":
+
+                for(int i = 0; i < candidates.size(); i++){
+                    if(candidates.get(i).get(1).equals(userID)){
+                        ArrayList<String> candid = candidates.get(i);
+                        candid.set(2, info.get(2));
+                        candid.set(3, info.get(3));
+                        candid.set(4, info.get(4));
+                        candid.set(5, info.get(5));
+                        candid.set(6, info.get(6));
+
+                        candidates.set(i, candid);
+                    }
+                }
+
+                break;
+            case "employeur":
+            case "agence":
+                //TODO
+                for(int i = 0; i < employersAgency.size(); i++){
+                    if(employersAgency.get(i).get(1).equals(userID)){
+                        ArrayList<String> empAg = employersAgency.get(i);
+                        empAg.set(2, info.get(2));
+                        empAg.set(3, info.get(3));
+                        empAg.set(4, info.get(4));
+                        empAg.set(5, info.get(5));
+                        empAg.set(6, info.get(6));
+
+                        employersAgency.set(i, candid);
+                    }
+                }
+
+                break;
+            case "admin":
+                break;
+        }
     }
 
     // -------------------------------------------------------------------------------------- //

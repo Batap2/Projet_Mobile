@@ -37,7 +37,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".Commun.RegisterMenu2"
+            android:name=".Commun.RegisterOrModifyInfoMenu"
             android:exported="true">
         </activity>
         <activity

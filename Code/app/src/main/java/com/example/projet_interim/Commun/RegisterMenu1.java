@@ -31,7 +31,7 @@ public class RegisterMenu1 extends AppCompatActivity {
         agence_b = (Button) findViewById(R.id.agence_button);
         admin_b = (Button) findViewById(R.id.admin_button);
 
-        intent = new Intent(getApplicationContext(), RegisterMenu2.class);
+        intent = new Intent(getApplicationContext(), RegisterOrModifyInfoMenu.class);
     }
 
     public void candidat_register(View v){
