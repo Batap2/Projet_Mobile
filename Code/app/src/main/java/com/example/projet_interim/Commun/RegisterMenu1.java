@@ -53,6 +53,7 @@ public class RegisterMenu1 extends AppCompatActivity {
 
     public void next(){
         startActivity(intent);
+        setResult(RESULT_OK);
         finish();
     }
 }

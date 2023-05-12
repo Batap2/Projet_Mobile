@@ -8,7 +8,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
+
+import java.util.ArrayList;
 
 public class RegisterOrModifyInfoMenu extends Activity {
 
@@ -17,6 +20,7 @@ public class RegisterOrModifyInfoMenu extends Activity {
         super.onCreate(savedInstanceState);
 
         DB db = new DB(getApplicationContext(), this);
+        CurentUser user = CurentUser.getInstance();
         String role = getIntent().getExtras().getString("role");
 
         LinearLayout linearLayout = new LinearLayout(this);
@@ -32,7 +36,13 @@ public class RegisterOrModifyInfoMenu extends Activity {
         mdp_t.setHint("Mot de passe");
 
         Button bouton = new Button(this);
-        bouton.setText("S'inscrire");
+
+        if(user.id == null){
+            bouton.setText("S'inscrire");
+        } else {
+            bouton.setText("Modifier le profil");
+        }
+
 
         switch (role) {
             case "candidat":
@@ -49,6 +59,9 @@ public class RegisterOrModifyInfoMenu extends Activity {
                 EditText natio_t = new EditText(this);
                 natio_t.setHint("Nationalité");
 
+                EditText cv_t = new EditText(this);
+                cv_t.setHint("CV");
+
 
                 bouton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -59,29 +72,49 @@ public class RegisterOrModifyInfoMenu extends Activity {
                         String p = String.valueOf(prenom_t.getText());
                         String dn = String.valueOf(dateNaissance_t.getText());
                         String na = String.valueOf(natio_t.getText());
+                        String cv = String.valueOf(cv_t.getText());
 
-                        if(un.equals("") || m.equals("") || n.equals("") || p.equals("")){
-                            Toast.makeText(getApplicationContext(),"Champ vide", Toast.LENGTH_LONG).show();
-                            return;
+                        if(user.id == null){
+                            if(un.equals("") || m.equals("") || n.equals("") || p.equals("")){
+                                Toast.makeText(getApplicationContext(),"Champ vide", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            if(db.getUserByName(un) != null){
+                                Toast.makeText(getApplicationContext(),"Nom d'utilisateur déjà utilisé", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            db.addCandidate(un, m, n, p, dn, na, cv);
+                            Toast.makeText(getApplicationContext(),"Bienvenu " + p, Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+                            ArrayList userInfo = new ArrayList<>();
+                            userInfo.add(user.role);
+                            userInfo.add(m);
+                            userInfo.add(n);
+                            userInfo.add(p);
+                            userInfo.add(dn);
+                            userInfo.add(na);
+                            userInfo.add(cv);
+
+                            db.modifyUserInfo(user.id, userInfo);
+                            finish();
                         }
 
-                        if(db.getUserByName(un) != null){
-                            Toast.makeText(getApplicationContext(),"Nom d'utilisateur déjà utilisé", Toast.LENGTH_LONG).show();
-                            return;
-                        }
 
-                        db.addCandidate(un, m, n, p, dn, na);
-                        Toast.makeText(getApplicationContext(),"Bienvenu " + p, Toast.LENGTH_LONG).show();
-                        finish();
                     }});
 
-                linearLayout.addView(username_t);
+                if(user.id == null){
+                    linearLayout.addView(username_t);
+                }
                 linearLayout.addView(mail_t);
                 linearLayout.addView(mdp_t);
                 linearLayout.addView(nom_t);
                 linearLayout.addView(prenom_t);
                 linearLayout.addView(dateNaissance_t);
                 linearLayout.addView(natio_t);
+                linearLayout.addView(cv_t);
                 linearLayout.addView(bouton);
 
                 break;
@@ -114,26 +147,39 @@ public class RegisterOrModifyInfoMenu extends Activity {
                         String s = String.valueOf(siren_t.getText());
                         String m2 = String.valueOf(mail2_t.getText());
 
-                        if(un.equals("") || ne.equals("") || m.equals("") || ns.equals("") || s.equals("")){
-                            Toast.makeText(getApplicationContext(),"Champ vide", Toast.LENGTH_LONG).show();
-                            return;
+                        if(user.id == null){
+                            if(un.equals("") || ne.equals("") || m.equals("") || ns.equals("") || s.equals("")){
+                                Toast.makeText(getApplicationContext(),"Champ vide", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            if(db.getUserByName(un) != null){
+                                Toast.makeText(getApplicationContext(),"Nom d'utilisateur déjà utilisé", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            db.addEmployerAgency(un, role, m, ne, ns, nss, s, m2);
+
+                            Toast.makeText(getApplicationContext(),"Bienvenu " + un, Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+                            ArrayList userInfo = new ArrayList<>();
+                            userInfo.add(user.role);
+                            userInfo.add(m);
+                            userInfo.add(ne);
+                            userInfo.add(ns);
+                            userInfo.add(nss);
+                            userInfo.add(s);
+                            userInfo.add(m2);
+
+                            db.modifyUserInfo(user.id, userInfo);
+                            finish();
                         }
-
-                        if(db.getUserByName(un) != null){
-                            Toast.makeText(getApplicationContext(),"Nom d'utilisateur déjà utilisé", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        db.addEmployerAgency(un, role, m, ne, ns, nss, s, m2);
-
-
-
-
-                        Toast.makeText(getApplicationContext(),"Bienvenu " + un, Toast.LENGTH_LONG).show();
-                        finish();
                     }});
 
-                linearLayout.addView(username_t);
+                if(user.id == null){
+                    linearLayout.addView(username_t);
+                }
                 linearLayout.addView(mail_t);
                 linearLayout.addView(mdp_t);
                 linearLayout.addView(nomServ_t);
@@ -172,14 +218,6 @@ public class RegisterOrModifyInfoMenu extends Activity {
                 linearLayout.addView(bouton);
                 break;
         }
-
-
-
-
-
-
-
-
 
         setContentView(linearLayout);
     }

@@ -104,7 +104,7 @@ public class DB {
 
     // ---------------------------------------- USER ---------------------------------------- //
 
-    public boolean addCandidate(String username, String mail, String nom, String prenom, String dateNaissance, String nationalite){
+    public boolean addCandidate(String username, String mail, String nom, String prenom, String dateNaissance, String nationalite, String cv){
         ArrayList<String> user = new ArrayList<>();
         user.add(String.valueOf(autoIncr_user));
         user.add(username);
@@ -120,7 +120,7 @@ public class DB {
         candidat.add(prenom);
         candidat.add(dateNaissance);
         candidat.add(nationalite);
-        candidat.add(""); //CV
+        candidat.add(cv);
 
         candidates.add(candidat);
 
@@ -238,7 +238,8 @@ public class DB {
     // info = {role, mail, nom, prenom, date de naissance, nationalité, CV}
     // or
     // info = {role, mail, nom entreprise, nom service/département, nom sous service/département, SIREN, mail2}
-    public void modifyUserInfo(String userID, ArrayList<String> info){
+    public boolean modifyUserInfo(String userID, ArrayList<String> info){
+
         for(int i = 0; i < users.size(); i++){
             if(users.get(i).get(0).equals(userID)){
                 ArrayList<String> user = users.get(i);
@@ -252,6 +253,11 @@ public class DB {
 
                 for(int i = 0; i < candidates.size(); i++){
                     if(candidates.get(i).get(1).equals(userID)){
+
+                        if(info.get(0).equals("") || info.get(1).equals("") ||info.get(2).equals("") ||info.get(3).equals("")){
+                            return false;
+                        }
+
                         ArrayList<String> candid = candidates.get(i);
                         candid.set(2, info.get(2));
                         candid.set(3, info.get(3));
@@ -269,14 +275,20 @@ public class DB {
                 //TODO
                 for(int i = 0; i < employersAgency.size(); i++){
                     if(employersAgency.get(i).get(1).equals(userID)){
+
+                        if(info.get(0).equals("") || info.get(1).equals("") ||info.get(2).equals("") ||info.get(3).equals("") || info.get(5).equals("")){
+                            return false;
+                        }
+
                         ArrayList<String> empAg = employersAgency.get(i);
                         empAg.set(2, info.get(2));
                         empAg.set(3, info.get(3));
                         empAg.set(4, info.get(4));
                         empAg.set(5, info.get(5));
                         empAg.set(6, info.get(6));
+                        empAg.set(7, info.get(7));
 
-                        employersAgency.set(i, candid);
+                        employersAgency.set(i, empAg);
                     }
                 }
 
@@ -284,6 +296,9 @@ public class DB {
             case "admin":
                 break;
         }
+
+        writeToFile();
+        return true;
     }
 
     // -------------------------------------------------------------------------------------- //
@@ -536,12 +551,12 @@ public class DB {
             db.annonces_prisent.clear();
             db.notifications.clear();
 
-            db.addCandidate("candidat1", "candidat1@sriracha.com", "Sauce", "Sriracha", "01-01-2020", "chine");
-            db.addCandidate("candidat2", "candidat2@golgoth.com", "Gol", "Goth", "01-01-2020", "chine");
+            db.addCandidate("candidat1", "candidat1@sriracha.com", "Sauce", "Sriracha", "01-01-2020", "chine", "");
+            db.addCandidate("candidat2", "candidat2@golgoth.com", "Gol", "Goth", "01-01-2020", "chine", "");
             db.addEmployerAgency("employeur1", "employeur", "bon@allez.fr", "BonAllez&Co", "yes", "", "134578998", "oula@2.yes");
             db.addEmployerAgency("agence1", "agence", "zeAgence@oui.fr", "ZeAgence", "wé", "ouiYaUnSousService", "999999999", "zzz@zzz.zzz");
             db.addAdmin("admin1", "admin@ad.min");
-            db.addCandidate("spammeur", "spammeur@deouf.com", "Spamming", "Lord", "01-01-2000", "France");
+            db.addCandidate("spammeur", "spammeur@deouf.com", "Spamming", "Lord", "01-01-2000", "France", "");
 
             db.addAnnonce("2","Caissier H/F","Durant cet emploie vous aurez l\u0027odieuse responsabilité de rester assis sur un siège et faire passer les articles devant un scanner. Etant en constante activité, le travail de caissier est extremement stimulant pour le cerveau.\nIl sera aussi nécéssaire d\u0027avoir dans la pocket un bac+5 étant donné les nombreux calculs que vous aurez a réaliser", "SouperMarket\n13 rue de la cafetière, 12345 McDog");
             db.addAnnonce("2", "Agent de service à la clientèle H/F",      "Nous recherchons un(e) agent(e) de service à la clientèle pour rejoindre notre équipe. Les principales responsabilités du poste incluent: répondre aux appels et aux courriels des clients, gérer les plaintes, traiter les commandes, assurer le suivi des livraisons et fournir des informations sur nos produits et services. Le candidat idéal doit avoir un minimum de deux ans d'expérience dans un rôle similaire et posséder de bonnes compétences en communication.\n\nNous offrons un salaire compétitif et des avantages sociaux, mais le travail peut être stressant et exigeant, avec des horaires flexibles et des périodes de pointe où la charge de travail est très élevée. Si vous cherchez un travail facile et routinier, ce n'est pas pour vous. Nous recherchons quelqu'un de motivé et capable de gérer des situations difficiles avec calme et professionnalisme.\n\nSi vous êtes intéressé(e) par ce poste, veuillez soumettre votre CV et une lettre de motivation décrivant pourquoi vous êtes la bonne personne pour ce travail. Seuls les candidats sélectionnés seront contactés.",

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.projet_interim.Commun.NotifMenu;
+import com.example.projet_interim.Commun.RegisterOrModifyInfoMenu;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
 import com.example.projet_interim.OfferAdaptator;
@@ -83,6 +84,10 @@ public class Profile_Menu_Candidates extends AppCompatActivity {
 
         Intent intent = null;
         switch (itemId) {
+            case R.id.drawer_modifyInfo:
+                intent = new Intent(getApplicationContext(), RegisterOrModifyInfoMenu.class);
+                intent.putExtra("role", user.role);
+                break;
             case R.id.drawer_annonce:
                 intent = new Intent(getApplicationContext(), AnnonceList_Menu_Anon_Candidates.class);
                 break;

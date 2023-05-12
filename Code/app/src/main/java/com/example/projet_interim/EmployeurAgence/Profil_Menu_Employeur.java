@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.projet_interim.Anon_Candidates.ApplyTo_Menu_Candidates;
 import com.example.projet_interim.CandidatureAdaptator;
 import com.example.projet_interim.Commun.NotifMenu;
+import com.example.projet_interim.Commun.RegisterOrModifyInfoMenu;
 import com.example.projet_interim.Commun.WriteNotifMenu;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
@@ -216,6 +217,10 @@ public class Profil_Menu_Employeur extends AppCompatActivity {
 
         Intent intent = null;
         switch (itemId) {
+            case R.id.drawer_modifyInfo:
+                intent = new Intent(getApplicationContext(), RegisterOrModifyInfoMenu.class);
+                intent.putExtra("role", user.role);
+                break;
             case R.id.drawer_annonce:
                 //intent = new Intent(getApplicationContext(), AnnonceList_Menu_Anon_Candidates.class);
                 break;

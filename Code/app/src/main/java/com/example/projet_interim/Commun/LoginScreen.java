@@ -83,14 +83,23 @@ public class LoginScreen extends AppCompatActivity {
 
     public void register(View view){
         Intent intent = new Intent(getApplicationContext(), RegisterMenu1.class);
-        startActivity(intent);
-        db = new DB(getApplicationContext(), this);
+        startActivityForResult(intent, 1);
     }
 
     public void anonConnect(View view){
         Toast.makeText(getApplicationContext(), "Vous êtes connecté en anonyme", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(LoginScreen.this, AnnonceList_Menu_Anon_Candidates.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                db = new DB(getApplicationContext(), this);
+            }
+        }
     }
 
     public void gotoMenu(){

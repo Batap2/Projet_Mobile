@@ -81,9 +81,13 @@ public class ApplyTo_Menu_Candidates extends AppCompatActivity {
 
     public void post(View view)
     {
-        db.applyTo(CurentUser.getInstance().id, annonce.get(0), String.valueOf(LM_text.getText()));
-        Toast.makeText(getApplicationContext(), "Vous avez postulez pour l'annonce : " + annonce.get(2), Toast.LENGTH_SHORT).show();
-        finish();
+        if(user.id == null){
+            Toast.makeText(getApplicationContext(), "Connectez vous pour postuler à l'annonce", Toast.LENGTH_SHORT).show();
+        } else {
+            db.applyTo(CurentUser.getInstance().id, annonce.get(0), String.valueOf(LM_text.getText()));
+            Toast.makeText(getApplicationContext(), "Vous avez postulez pour l'annonce : " + annonce.get(2), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     public void share(View view){
