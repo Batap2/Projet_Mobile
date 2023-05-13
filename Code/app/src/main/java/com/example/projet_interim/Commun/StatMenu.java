@@ -1,57 +1,40 @@
 package com.example.projet_interim.Commun;
 
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.view.MenuItem;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
 import com.example.projet_interim.Anon_Candidates.AnnonceList_Menu_Anon_Candidates;
 import com.example.projet_interim.Anon_Candidates.Profile_Menu_Candidates;
 import com.example.projet_interim.CurentUser;
-import com.example.projet_interim.DB;
 import com.example.projet_interim.EmployeurAgence.Profil_Menu_Employeur;
-import com.example.projet_interim.NotifAdaptator;
-import com.example.projet_interim.OfferAdaptator;
 import com.example.projet_interim.R;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-
-public class WriteNotifMenu extends AppCompatActivity {
+public class StatMenu extends AppCompatActivity {
 
     ActionBarDrawerToggle barToggled;
     DrawerLayout drawerLayout;
     NavigationView navView;
-
-    EditText destinataire_t;
-    EditText objet_t;
-    EditText content_t;
-
     CurentUser user;
-    DB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.write_notif_menu);
+        setContentView(R.layout.one_text_menu);
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_notifMenu);
-        navView = (NavigationView) findViewById(R.id.navView_notifMenu);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_oneText_Menu);
+        navView = (NavigationView) findViewById(R.id.navView_oneText_Menu);
 
         // init de la db et récupération du user courant
         user = CurentUser.getInstance();
-        db = new DB(getApplicationContext(), this);
 
         // Change le contenu du side menu
         switch (user.role){
@@ -80,39 +63,24 @@ public class WriteNotifMenu extends AppCompatActivity {
             }
         });
 
-        destinataire_t = (EditText) findViewById(R.id.writeNotif_destinataire_text);
-        objet_t = (EditText) findViewById(R.id.writeNotif_title_text);
-        content_t = (EditText) findViewById(R.id.writeNotif_content_text);
+        TextView text = findViewById(R.id.text_t);
+        text.setMovementMethod(new ScrollingMovementMethod());
 
-        if(getIntent().getExtras() != null){
-            destinataire_t.setText(getIntent().getExtras().getString("to"));
-            objet_t.setText(getIntent().getExtras().getString("obj"));
+        if(user.role.equals("candidat")){
+            text.setText("Rapport sur l'employabilité et les annonces d'emploi en France :\n\n" +
+                    "\n" +
+                    "10 000 annonces d'emploi en moyenne chaque jour dans divers secteurs\n\n" +
+                    "L'Île-de-France, Auvergne-Rhône-Alpes et Occitanie ont le plus grand nombre d'offres d'emploi\n\n" +
+                    "Les compétences les plus recherchées sont liées aux TI, au marketing, à la vente, à la santé et aux services à la personne\n\n" +
+                    "Les développeurs informatiques, les commerciaux et les infirmiers sont les profils les plus demandés.");
+        } else {
+            text.setText("Rapport sur l'employabilité et les annonces d'emploi en France :\n\n" +
+                    "\n" +
+                    "10 000 annonces d'emploi en moyenne chaque jour dans divers secteurs\n\n" +
+                    "L'Île-de-France, Auvergne-Rhône-Alpes et Occitanie ont le plus grand nombre d'offres d'emploi\n\n" +
+                    "Les compétences les plus recherchées sont liées aux TI, au marketing, à la vente, à la santé et aux services à la personne\n\n" +
+                    "Les développeurs informatiques, les commerciaux et les infirmiers sont les profils les plus demandés.");
         }
-    }
-
-    public void backToNotifList(View v){
-        finish();
-    }
-
-    public void sendNotif(View v){
-        String dest = String.valueOf(destinataire_t.getText());
-        String obj = String.valueOf(objet_t.getText());
-        String cont = String.valueOf(content_t.getText());
-
-        if(obj.equals("")){
-            Toast.makeText(getApplicationContext(),"Objet vide", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String destID = db.getUserId(dest);
-
-        if(destID == null){
-            Toast.makeText(getApplicationContext(),"Le destinataire n'existe pas", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        db.addNotif(user.id, destID, obj, cont);
-        finish();
     }
 
     // Permet d'ouvrir le Side Menu

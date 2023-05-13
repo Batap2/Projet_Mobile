@@ -24,6 +24,7 @@ import com.example.projet_interim.Anon_Candidates.AnnonceList_Menu_Anon_Candidat
 import com.example.projet_interim.Anon_Candidates.Profile_Menu_Candidates;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
+import com.example.projet_interim.EmployeurAgence.Profil_Menu_Employeur;
 import com.example.projet_interim.NotifAdaptator;
 import com.example.projet_interim.OfferAdaptator;
 import com.example.projet_interim.R;
@@ -169,8 +170,7 @@ public class NotifMenu extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
                 }
                 if(user.role.equals("employeur") || user.role.equals("agence")){
-                    // TODO : relier le menu profil employeur/agence
-                    //intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
+                    intent = new Intent(getApplicationContext(), Profil_Menu_Employeur.class);
                 }
                 if(user.role.equals("admin")){
                     // TODO : relier le menu profil admin
@@ -181,18 +181,22 @@ public class NotifMenu extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), AnnonceList_Menu_Anon_Candidates.class);
                 break;
             case R.id.drawer_cvHelp:
-                Toast.makeText(getApplicationContext(), "Menu cvHelp", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), CvHelpMenu.class);
                 break;
             case R.id.drawer_stat:
-                Toast.makeText(getApplicationContext(), "menu Stats", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), StatMenu.class);
                 break;
             case R.id.drawer_disconnect:
-                Toast.makeText(getApplicationContext(), "disconnect", Toast.LENGTH_SHORT).show();
+                CurentUser.getInstance().id = null;
+                CurentUser.getInstance().username = null;
+                CurentUser.getInstance().role = null;
+                intent = new Intent(getApplicationContext(), LoginScreen.class);
                 break;
         }
 
         if(intent != null){
             startActivity(intent);
+            finish();
         }
     }
 }

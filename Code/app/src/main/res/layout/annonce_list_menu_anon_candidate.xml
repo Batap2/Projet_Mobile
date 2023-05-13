@@ -19,6 +19,7 @@
             android:layout_height="80dp"
             android:background="@color/green1"
             android:backgroundTint="@color/box1"
+            android:translationZ="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:hint="Durée"
+            android:translationZ="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/search_option_menu"
             app:layout_constraintEnd_toEndOf="@+id/search_option_menu"
             app:layout_constraintStart_toStartOf="@+id/search_option_menu"
@@ -42,6 +44,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background"
             android:hint="Période"
+            android:translationZ="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/search_option_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/search_option_menu"
@@ -56,6 +59,7 @@
             android:layout_marginTop="44dp"
             android:background="@color/background"
             android:hint="Lieu"
+            android:translationZ="2dp"
             app:layout_constraintStart_toStartOf="@+id/search_option_menu"
             app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
 
@@ -67,6 +71,7 @@
             android:layout_marginTop="12dp"
             android:background="@color/background"
             android:hint="Employeur"
+            android:translationZ="2dp"
             app:layout_constraintStart_toStartOf="@+id/search_option_menu"
             app:layout_constraintTop_toTopOf="@+id/search_option_menu" />
 
@@ -77,6 +82,7 @@
             android:layout_marginEnd="12dp"
             android:background="@color/background"
             android:hint="Métier"
+            android:translationZ="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/search_option_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.986"

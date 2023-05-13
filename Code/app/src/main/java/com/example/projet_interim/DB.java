@@ -234,7 +234,7 @@ public class DB {
         }
         return null;
     }
-    // employersAgency : id, user_id, nom entreprise, nom service/département, nom sous service/département, SIREN, mail2
+
     // info = {role, mail, nom, prenom, date de naissance, nationalité, CV}
     // or
     // info = {role, mail, nom entreprise, nom service/département, nom sous service/département, SIREN, mail2}
@@ -390,6 +390,19 @@ public class DB {
 
         candidatures = newCandidatures;
         writeToFile();
+    }
+
+    public ArrayList<ArrayList<String>> getAnnoncesFromUsername(String username){
+        ArrayList<ArrayList<String>> ann = new ArrayList<>();
+
+        for(ArrayList<String> annonce : annonces){
+            String name = getUserNameFromID(annonce.get(1));
+            if(name.equals(username)){
+                ann.add(annonce);
+            }
+        }
+
+        return ann;
     }
 
     // -------------------------------------------------------------------------------------- //
@@ -575,6 +588,9 @@ public class DB {
                     "SouperMarket\n14 rue de la cafetière, 12345 McDog"
             );
             db.addAnnonce("2","Caissier(ère)",      "Nous recherchons un(e) caissier(ère) pour rejoindre notre équipe. Les principales responsabilités incluent l'encaissement des achats des clients, la gestion des retours et des échanges et l'assistance à l'équipe dans les tâches de service à la clientèle. Le candidat doit être capable de travailler de manière efficace sous pression.\n\nLe poste est à temps partiel avec des horaires variables, y compris les soirs et les week-ends. Le salaire est compétitif, mais le travail peut être stressant et exigeant, avec des clients difficiles et des périodes de pointe très chargées.\n\nSi vous êtes intéressé(e) par ce poste, veuillez envoyer votre CV et une lettre de motivation décrivant votre expérience en matière de service à la clientèle. Nous ne contacterons que les candidats sélectionnés.",
+                    "SouperMarket\n14 rue de la cafetière, 12345 McDog"
+            );
+            db.addAnnonce("3","Caissier(ère)",      "Nous recherchons un(e) caissier(ère) pour rejoindre notre équipe. Les principales responsabilités incluent l'encaissement des achats des clients, la gestion des retours et des échanges et l'assistance à l'équipe dans les tâches de service à la clientèle. Le candidat doit être capable de travailler de manière efficace sous pression.\n\nLe poste est à temps partiel avec des horaires variables, y compris les soirs et les week-ends. Le salaire est compétitif, mais le travail peut être stressant et exigeant, avec des clients difficiles et des périodes de pointe très chargées.\n\nSi vous êtes intéressé(e) par ce poste, veuillez envoyer votre CV et une lettre de motivation décrivant votre expérience en matière de service à la clientèle. Nous ne contacterons que les candidats sélectionnés.",
                     "SouperMarket\n14 rue de la cafetière, 12345 McDog"
             );
 

@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.example.projet_interim.Anon_Candidates.AnnonceList_Menu_Anon_Candidates;
 import com.example.projet_interim.Anon_Candidates.Profile_Menu_Candidates;
+import com.example.projet_interim.Commun.CvHelpMenu;
+import com.example.projet_interim.Commun.LoginScreen;
+import com.example.projet_interim.Commun.StatMenu;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
 import com.example.projet_interim.R;
@@ -98,28 +101,31 @@ public class AddAnnonceMenu extends AppCompatActivity {
 
     // Change d'Activity
     void gotoMenu(int itemId){
-        // TODO
         Intent intent = null;
         switch (itemId) {
             case R.id.drawer_profil:
-
+                intent = new Intent(getApplicationContext(), Profil_Menu_Employeur.class);
                 break;
             case R.id.drawer_annonce:
                 intent = new Intent(getApplicationContext(), AnnonceList_Menu_Anon_Candidates.class);
                 break;
             case R.id.drawer_cvHelp:
-                Toast.makeText(getApplicationContext(), "Menu cvHelp", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), CvHelpMenu.class);
                 break;
             case R.id.drawer_stat:
-                Toast.makeText(getApplicationContext(), "menu Stats", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), StatMenu.class);
                 break;
             case R.id.drawer_disconnect:
-                Toast.makeText(getApplicationContext(), "disconnect", Toast.LENGTH_SHORT).show();
+                CurentUser.getInstance().id = null;
+                CurentUser.getInstance().username = null;
+                CurentUser.getInstance().role = null;
+                intent = new Intent(getApplicationContext(), LoginScreen.class);
                 break;
         }
 
         if(intent != null){
             startActivity(intent);
+            finish();
         }
     }
 }

@@ -106,8 +106,6 @@ public class LoginScreen extends AppCompatActivity {
 
         Intent intent = null;
 
-        Log.e("role", CurentUser.getInstance().role);
-
         switch (CurentUser.getInstance().role) {
             case "candidat":
                 intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
@@ -116,15 +114,16 @@ public class LoginScreen extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), Profil_Menu_Employeur.class);
                 break;
             case "agence":
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), Profil_Menu_Employeur.class);
                 break;
             case "admin":
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "admin menu", Toast.LENGTH_SHORT).show();
                 break;
         }
 
         if(intent != null){
             startActivity(intent);
+            finish();
         }
     }
 }

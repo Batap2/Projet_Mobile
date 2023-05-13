@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projet_interim.Commun.CvHelpMenu;
+import com.example.projet_interim.Commun.LoginScreen;
+import com.example.projet_interim.Commun.NotifMenu;
+import com.example.projet_interim.Commun.StatMenu;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
 import com.example.projet_interim.R;
@@ -121,24 +125,32 @@ public class ApplyTo_Menu_Candidates extends AppCompatActivity {
         Intent intent = null;
         switch (itemId) {
             case R.id.drawer_profil:
-                intent = new Intent(getApplicationContext(), AnnonceList_Menu_Anon_Candidates.class);
+                intent = new Intent(getApplicationContext(), Profile_Menu_Candidates.class);
                 break;
             case R.id.drawer_msg:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), NotifMenu.class);
                 break;
             case R.id.drawer_cvHelp:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), CvHelpMenu.class);
                 break;
             case R.id.drawer_stat:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), StatMenu.class);
                 break;
             case R.id.drawer_disconnect:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                CurentUser.getInstance().id = null;
+                CurentUser.getInstance().username = null;
+                CurentUser.getInstance().role = null;
+                intent = new Intent(getApplicationContext(), LoginScreen.class);
                 break;
         }
 
         if(intent != null){
-            startActivity(intent);
+            if(user.id == null){
+                Toast.makeText(getApplicationContext(), "Vous n'êtes pas connecté", Toast.LENGTH_SHORT).show();
+            } else {
+                startActivity(intent);
+                finish();
+            }
         }
     }
 }

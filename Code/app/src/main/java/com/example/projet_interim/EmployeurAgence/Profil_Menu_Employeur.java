@@ -22,8 +22,11 @@ import android.widget.Toast;
 
 import com.example.projet_interim.Anon_Candidates.ApplyTo_Menu_Candidates;
 import com.example.projet_interim.CandidatureAdaptator;
+import com.example.projet_interim.Commun.CvHelpMenu;
+import com.example.projet_interim.Commun.LoginScreen;
 import com.example.projet_interim.Commun.NotifMenu;
 import com.example.projet_interim.Commun.RegisterOrModifyInfoMenu;
+import com.example.projet_interim.Commun.StatMenu;
 import com.example.projet_interim.Commun.WriteNotifMenu;
 import com.example.projet_interim.CurentUser;
 import com.example.projet_interim.DB;
@@ -228,18 +231,22 @@ public class Profil_Menu_Employeur extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), NotifMenu.class);
                 break;
             case R.id.drawer_cvHelp:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué sur quoi là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), CvHelpMenu.class);
                 break;
             case R.id.drawer_stat:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), StatMenu.class);
                 break;
             case R.id.drawer_disconnect:
-                Toast.makeText(getApplicationContext(), "yo tantouze, t'as cliqué là ?", Toast.LENGTH_SHORT).show();
+                CurentUser.getInstance().id = null;
+                CurentUser.getInstance().username = null;
+                CurentUser.getInstance().role = null;
+                intent = new Intent(getApplicationContext(), LoginScreen.class);
                 break;
         }
 
         if(intent != null){
             startActivity(intent);
+            finish();
         }
     }
 }
