@@ -78,12 +78,16 @@ public class AnnonceList_Menu_Anon_Candidates extends AppCompatActivity {
         listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<String> annonce = (ArrayList<String>)listView.getItemAtPosition(position);
-                //Toast.makeText(getApplicationContext(),"You selected : " + item,Toast.LENGTH_SHORT).show();
+                if(user.id != null){
+                    ArrayList<String> annonce = (ArrayList<String>)listView.getItemAtPosition(position);
+                    //Toast.makeText(getApplicationContext(),"You selected : " + item,Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), ApplyTo_Menu_Candidates.class);
-                intent.putExtra("annonce",annonce);
-                startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), ApplyTo_Menu_Candidates.class);
+                    intent.putExtra("annonce",annonce);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Vous n'êtes pas connecté", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -108,10 +112,15 @@ public class AnnonceList_Menu_Anon_Candidates extends AppCompatActivity {
     // Permet d'ouvrir le Side Menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(barToggled.onOptionsItemSelected(item)){
-            return true;
+        if(user.id != null){
+            if(barToggled.onOptionsItemSelected(item)){
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        } else {
+            Toast.makeText(getApplicationContext(), "Vous n'êtes pas connecté", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return super.onOptionsItemSelected(item);
     }
 
     void refreshListView(){
